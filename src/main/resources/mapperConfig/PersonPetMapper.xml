@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.longshu.petsfairy.dao.PersonPetMapper" >
+  <resultMap id="BaseResultMap" type="com.longshu.petsfairy.entity.PersonPet" >
+    <id column="pet_id" property="petId" jdbcType="VARCHAR" />
+    <result column="pet_name" property="petName" jdbcType="VARCHAR" />
+    <result column="pet_photo" property="petPhoto" jdbcType="VARCHAR" />
+    <result column="pet_gender" property="petGender" jdbcType="INTEGER" />
+    <result column="pet_variety" property="petVariety" jdbcType="VARCHAR" />
+    <result column="pet_birthday" property="petBirthday" jdbcType="TIMESTAMP" />
+    <result column="pet_come_datetime" property="petComeDatetime" jdbcType="TIMESTAMP" />
+    <result column="pet_sterilization" property="petSterilization" jdbcType="INTEGER" />
+    <result column="pet_master_id" property="petMasterId" jdbcType="VARCHAR" />
+    <result column="pet_weight" property="petWeight" jdbcType="DOUBLE" />
+    <result column="pet_come_petsfairy" property="petComePetsfairy" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pet_id, pet_name, pet_photo, pet_gender, pet_variety, pet_birthday, pet_come_datetime,
+    pet_sterilization, pet_master_id, pet_weight, pet_come_petsfairy
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.longshu.petsfairy.entity.PersonPetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from person_pet
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from person_pet
+    where pet_id = #{petId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from person_pet
+    where pet_id = #{petId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.longshu.petsfairy.entity.PersonPetExample" >
+    delete from person_pet
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.longshu.petsfairy.entity.PersonPet" >
+    insert into person_pet (pet_id, pet_name, pet_photo,
+      pet_gender, pet_variety, pet_birthday,
+      pet_come_datetime, pet_sterilization, pet_master_id,
+      pet_weight, pet_come_petsfairy)
+    values (#{petId,jdbcType=VARCHAR}, #{petName,jdbcType=VARCHAR}, #{petPhoto,jdbcType=VARCHAR},
+      #{petGender,jdbcType=INTEGER}, #{petVariety,jdbcType=VARCHAR}, #{petBirthday,jdbcType=TIMESTAMP},
+      #{petComeDatetime,jdbcType=TIMESTAMP}, #{petSterilization,jdbcType=INTEGER}, #{petMasterId,jdbcType=VARCHAR},
+      #{petWeight,jdbcType=DOUBLE}, #{petComePetsfairy,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.longshu.petsfairy.entity.PersonPet" >
+    insert into person_pet
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="petId != null" >
+        pet_id,
+      </if>
+      <if test="petName != null" >
+        pet_name,
+      </if>
+      <if test="petPhoto != null" >
+        pet_photo,
+      </if>
+      <if test="petGender != null" >
+        pet_gender,
+      </if>
+      <if test="petVariety != null" >
+        pet_variety,
+      </if>
+      <if test="petBirthday != null" >
+        pet_birthday,
+      </if>
+      <if test="petComeDatetime != null" >
+        pet_come_datetime,
+      </if>
+      <if test="petSterilization != null" >
+        pet_sterilization,
+      </if>
+      <if test="petMasterId != null" >
+        pet_master_id,
+      </if>
+      <if test="petWeight != null" >
+        pet_weight,
+      </if>
+      <if test="petComePetsfairy != null" >
+        pet_come_petsfairy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="petId != null" >
+        #{petId,jdbcType=VARCHAR},
+      </if>
+      <if test="petName != null" >
+        #{petName,jdbcType=VARCHAR},
+      </if>
+      <if test="petPhoto != null" >
+        #{petPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="petGender != null" >
+        #{petGender,jdbcType=INTEGER},
+      </if>
+      <if test="petVariety != null" >
+        #{petVariety,jdbcType=VARCHAR},
+      </if>
+      <if test="petBirthday != null" >
+        #{petBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="petComeDatetime != null" >
+        #{petComeDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="petSterilization != null" >
+        #{petSterilization,jdbcType=INTEGER},
+      </if>
+      <if test="petMasterId != null" >
+        #{petMasterId,jdbcType=VARCHAR},
+      </if>
+      <if test="petWeight != null" >
+        #{petWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="petComePetsfairy != null" >
+        #{petComePetsfairy,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.longshu.petsfairy.entity.PersonPetExample" resultType="java.lang.Integer" >
+    select count(*) from person_pet
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update person_pet
+    <set >
+      <if test="record.petId != null" >
+        pet_id = #{record.petId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.petName != null" >
+        pet_name = #{record.petName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.petPhoto != null" >
+        pet_photo = #{record.petPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.petGender != null" >
+        pet_gender = #{record.petGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.petVariety != null" >
+        pet_variety = #{record.petVariety,jdbcType=VARCHAR},
+      </if>
+      <if test="record.petBirthday != null" >
+        pet_birthday = #{record.petBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.petComeDatetime != null" >
+        pet_come_datetime = #{record.petComeDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.petSterilization != null" >
+        pet_sterilization = #{record.petSterilization,jdbcType=INTEGER},
+      </if>
+      <if test="record.petMasterId != null" >
+        pet_master_id = #{record.petMasterId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.petWeight != null" >
+        pet_weight = #{record.petWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.petComePetsfairy != null" >
+        pet_come_petsfairy = #{record.petComePetsfairy,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update person_pet
+    set pet_id = #{record.petId,jdbcType=VARCHAR},
+    pet_name = #{record.petName,jdbcType=VARCHAR},
+    pet_photo = #{record.petPhoto,jdbcType=VARCHAR},
+    pet_gender = #{record.petGender,jdbcType=INTEGER},
+    pet_variety = #{record.petVariety,jdbcType=VARCHAR},
+    pet_birthday = #{record.petBirthday,jdbcType=TIMESTAMP},
+    pet_come_datetime = #{record.petComeDatetime,jdbcType=TIMESTAMP},
+    pet_sterilization = #{record.petSterilization,jdbcType=INTEGER},
+    pet_master_id = #{record.petMasterId,jdbcType=VARCHAR},
+    pet_weight = #{record.petWeight,jdbcType=DOUBLE},
+    pet_come_petsfairy = #{record.petComePetsfairy,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.longshu.petsfairy.entity.PersonPet" >
+    update person_pet
+    <set >
+      <if test="petName != null and '' != petName" >
+        pet_name = #{petName,jdbcType=VARCHAR},
+      </if>
+      <if test="petPhoto != null and '' != petPhoto" >
+        pet_photo = #{petPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="petGender != null and '' != petGender" >
+        pet_gender = #{petGender,jdbcType=INTEGER},
+      </if>
+      <if test="petVariety != null and '' != petVariety" >
+        pet_variety = #{petVariety,jdbcType=VARCHAR},
+      </if>
+      <if test="petBirthday != null" >
+        pet_birthday = #{petBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="petComeDatetime != null" >
+        pet_come_datetime = #{petComeDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="petSterilization != null and '' != petSterilization" >
+        pet_sterilization = #{petSterilization,jdbcType=INTEGER},
+      </if>
+      <if test="petMasterId != null and '' != petMasterId" >
+        pet_master_id = #{petMasterId,jdbcType=VARCHAR},
+      </if>
+      <if test="petWeight != null and '' != petWeight" >
+        pet_weight = #{petWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="petComePetsfairy != null" >
+        pet_come_petsfairy = #{petComePetsfairy,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pet_id = #{petId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.longshu.petsfairy.entity.PersonPet" >
+    update person_pet
+    set pet_name = #{petName,jdbcType=VARCHAR},
+      pet_photo = #{petPhoto,jdbcType=VARCHAR},
+      pet_gender = #{petGender,jdbcType=INTEGER},
+      pet_variety = #{petVariety,jdbcType=VARCHAR},
+      pet_birthday = #{petBirthday,jdbcType=TIMESTAMP},
+      pet_come_datetime = #{petComeDatetime,jdbcType=TIMESTAMP},
+      pet_sterilization = #{petSterilization,jdbcType=INTEGER},
+      pet_master_id = #{petMasterId,jdbcType=VARCHAR},
+      pet_weight = #{petWeight,jdbcType=DOUBLE},
+      pet_come_petsfairy = #{petComePetsfairy,jdbcType=TIMESTAMP}
+    where pet_id = #{petId,jdbcType=VARCHAR}
+  </update>
+</mapper>

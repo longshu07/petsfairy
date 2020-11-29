@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.longshu.petsfairy.dao.InvitationMapper" >
+  <resultMap id="BaseResultMap" type="com.longshu.petsfairy.entity.Invitation" >
+    <id column="invitation_id" property="invitationId" jdbcType="VARCHAR" />
+    <result column="invitation_content" property="invitationContent" jdbcType="VARCHAR" />
+    <result column="invitation_photo" property="invitationPhoto" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="invitation_master_id" property="invitationMasterId" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="person_pets_id" property="personPetsId" jdbcType="VARCHAR" />
+  </resultMap>
+  <!--帖子数据，包括发帖人的数据-->
+  <resultMap id="invitationAndCustomerMap" type="com.longshu.petsfairy.entity.Invitation">
+    <id column="invitation_id" property="invitationId" jdbcType="VARCHAR" />
+    <result column="invitation_content" property="invitationContent" jdbcType="VARCHAR" />
+    <result column="invitation_photo" property="invitationPhoto" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="invitation_master_id" property="invitationMasterId" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="person_pets_id" property="personPetsId" jdbcType="VARCHAR" />
+    <!--加入发帖人信息-->
+    <association property="customer" javaType="com.longshu.petsfairy.entity.Customer">
+      <id column="customer_id" property="customerId" jdbcType="VARCHAR" />
+      <result column="customer_phone" property="customerPhone" jdbcType="VARCHAR" />
+      <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+      <result column="avatarurl" property="avatarurl" jdbcType="VARCHAR" />
+      <result column="gender" property="gender" jdbcType="INTEGER" />
+      <result column="customer_age" property="customerAge" jdbcType="INTEGER" />
+    </association>
+  </resultMap>
+
+
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    invitation_id, invitation_content, invitation_photo, create_time, invitation_master_id,
+    delete_flag, person_pets_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.longshu.petsfairy.entity.InvitationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from invitation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from invitation
+    where invitation_id = #{invitationId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from invitation
+    where invitation_id = #{invitationId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.longshu.petsfairy.entity.InvitationExample" >
+    delete from invitation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.longshu.petsfairy.entity.Invitation" >
+    insert into invitation (invitation_id, invitation_content,
+      invitation_photo, create_time, invitation_master_id,
+      delete_flag, person_pets_id)
+    values (#{invitationId,jdbcType=VARCHAR}, #{invitationContent,jdbcType=VARCHAR},
+      #{invitationPhoto,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{invitationMasterId,jdbcType=VARCHAR},
+      #{deleteFlag,jdbcType=INTEGER}, #{personPetsId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.longshu.petsfairy.entity.Invitation" >
+    insert into invitation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invitationId != null" >
+        invitation_id,
+      </if>
+      <if test="invitationContent != null" >
+        invitation_content,
+      </if>
+      <if test="invitationPhoto != null" >
+        invitation_photo,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="invitationMasterId != null" >
+        invitation_master_id,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="personPetsId != null" >
+        person_pets_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invitationId != null" >
+        #{invitationId,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationContent != null" >
+        #{invitationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationPhoto != null" >
+        #{invitationPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invitationMasterId != null" >
+        #{invitationMasterId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="personPetsId != null" >
+        #{personPetsId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.longshu.petsfairy.entity.InvitationExample" resultType="java.lang.Integer" >
+    select count(*) from invitation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update invitation
+    <set >
+      <if test="record.invitationId != null" >
+        invitation_id = #{record.invitationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invitationContent != null" >
+        invitation_content = #{record.invitationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invitationPhoto != null" >
+        invitation_photo = #{record.invitationPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.invitationMasterId != null" >
+        invitation_master_id = #{record.invitationMasterId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.personPetsId != null" >
+        person_pets_id = #{record.personPetsId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update invitation
+    set invitation_id = #{record.invitationId,jdbcType=VARCHAR},
+    invitation_content = #{record.invitationContent,jdbcType=VARCHAR},
+    invitation_photo = #{record.invitationPhoto,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    invitation_master_id = #{record.invitationMasterId,jdbcType=VARCHAR},
+    delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+    person_pets_id = #{record.personPetsId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.longshu.petsfairy.entity.Invitation" >
+    update invitation
+    <set >
+      <if test="invitationContent != null" >
+        invitation_content = #{invitationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationPhoto != null" >
+        invitation_photo = #{invitationPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invitationMasterId != null" >
+        invitation_master_id = #{invitationMasterId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="personPetsId != null" >
+        person_pets_id = #{personPetsId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where invitation_id = #{invitationId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.longshu.petsfairy.entity.Invitation" >
+    update invitation
+    set invitation_content = #{invitationContent,jdbcType=VARCHAR},
+      invitation_photo = #{invitationPhoto,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      invitation_master_id = #{invitationMasterId,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      person_pets_id = #{personPetsId,jdbcType=VARCHAR}
+    where invitation_id = #{invitationId,jdbcType=VARCHAR}
+  </update>
+  <!--分页查询全部帖子selectAllInvitaionByPage-->
+  <select id="selectAllInvitaionByPage"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from invitation where delete_flag=0 order By create_time DESC
+  </select>
+
+
+  <!--通过用户id，查询该用户点赞过的帖子-->
+  <select id="getAllBeLikedInvitationByCustomerId" parameterType="java.lang.String"  resultMap="invitationAndCustomerMap">
+    SELECT invitation.*,customer.*
+    FROM
+    likes, invitation,customer
+    WHERE likes.invitation_id = invitation.invitation_id
+    AND customer.customer_id = invitation.invitation_master_id
+    AND likes.is_delete = 1
+    AND likes.customer_id=#{customerId}
+    ORDER BY likes.createTime DESC
+  </select>
+
+  <!--通过帖子List查询帖子数据-->
+  <select id="getAllBeLikedInvitationByInvitationList" parameterType="java.util.List"  resultMap="BaseResultMap">
+    select *
+    FROM
+    invitation
+    WHERE
+    invitation_id IN
+    <foreach collection="list" index="index" item="item" open="("
+             separator="," close=")">
+      #{item.invitationId}
+    </foreach>
+  </select>
+</mapper>

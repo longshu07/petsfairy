@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.longshu.petsfairy.dao.PetsInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.longshu.petsfairy.entity.PetsInfo" >
+    <id column="pets_info_id" property="petsInfoId" jdbcType="VARCHAR" />
+    <result column="pets_name_cn" property="petsNameCn" jdbcType="VARCHAR" />
+    <result column="pets_name_en" property="petsNameEn" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="birth_place" property="birthPlace" jdbcType="VARCHAR" />
+    <result column="lowest_price" property="lowestPrice" jdbcType="DECIMAL" />
+    <result column="hight_price" property="hightPrice" jdbcType="DECIMAL" />
+    <result column="lowest_weight" property="lowestWeight" jdbcType="DOUBLE" />
+    <result column="hight_weight" property="hightWeight" jdbcType="DOUBLE" />
+    <result column="nature" property="nature" jdbcType="VARCHAR" />
+    <result column="interest" property="interest" jdbcType="VARCHAR" />
+    <result column="shape" property="shape" jdbcType="VARCHAR" />
+    <result column="hair_length" property="hairLength" jdbcType="VARCHAR" />
+    <result column="history" property="history" jdbcType="VARCHAR" />
+    <result column="form_character" property="formCharacter" jdbcType="VARCHAR" />
+    <result column="standard" property="standard" jdbcType="VARCHAR" />
+    <result column="life_habit" property="lifeHabit" jdbcType="VARCHAR" />
+    <result column="character_traits" property="characterTraits" jdbcType="VARCHAR" />
+    <result column="diet" property="diet" jdbcType="VARCHAR" />
+    <result column="tips" property="tips" jdbcType="VARCHAR" />
+    <result column="domesticate_method" property="domesticateMethod" jdbcType="VARCHAR" />
+    <result column="disease" property="disease" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="pets_photos" property="petsPhotos" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="VARCHAR" />
+    <result column="udate_admin" property="udateAdmin" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pets_info_id, pets_name_cn, pets_name_en, nickname, birth_place, lowest_price, hight_price, 
+    lowest_weight, hight_weight, nature, interest, shape, hair_length, history, form_character, 
+    standard, life_habit, character_traits, diet, tips, domesticate_method, disease, 
+    update_time, pets_photos, category_id, udate_admin
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.longshu.petsfairy.entity.PetsInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pets_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from pets_info
+    where pets_info_id = #{petsInfoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pets_info
+    where pets_info_id = #{petsInfoId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.longshu.petsfairy.entity.PetsInfoExample" >
+    delete from pets_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.longshu.petsfairy.entity.PetsInfo" >
+    insert into pets_info (pets_info_id, pets_name_cn, pets_name_en, 
+      nickname, birth_place, lowest_price, 
+      hight_price, lowest_weight, hight_weight, 
+      nature, interest, shape, 
+      hair_length, history, form_character, 
+      standard, life_habit, character_traits, 
+      diet, tips, domesticate_method, 
+      disease, update_time, pets_photos, 
+      category_id, udate_admin)
+    values (#{petsInfoId,jdbcType=VARCHAR}, #{petsNameCn,jdbcType=VARCHAR}, #{petsNameEn,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{birthPlace,jdbcType=VARCHAR}, #{lowestPrice,jdbcType=DECIMAL}, 
+      #{hightPrice,jdbcType=DECIMAL}, #{lowestWeight,jdbcType=DOUBLE}, #{hightWeight,jdbcType=DOUBLE}, 
+      #{nature,jdbcType=VARCHAR}, #{interest,jdbcType=VARCHAR}, #{shape,jdbcType=VARCHAR}, 
+      #{hairLength,jdbcType=VARCHAR}, #{history,jdbcType=VARCHAR}, #{formCharacter,jdbcType=VARCHAR}, 
+      #{standard,jdbcType=VARCHAR}, #{lifeHabit,jdbcType=VARCHAR}, #{characterTraits,jdbcType=VARCHAR}, 
+      #{diet,jdbcType=VARCHAR}, #{tips,jdbcType=VARCHAR}, #{domesticateMethod,jdbcType=VARCHAR}, 
+      #{disease,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{petsPhotos,jdbcType=VARCHAR}, 
+      #{categoryId,jdbcType=VARCHAR}, #{udateAdmin,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.longshu.petsfairy.entity.PetsInfo" >
+    insert into pets_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="petsInfoId != null" >
+        pets_info_id,
+      </if>
+      <if test="petsNameCn != null" >
+        pets_name_cn,
+      </if>
+      <if test="petsNameEn != null" >
+        pets_name_en,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="birthPlace != null" >
+        birth_place,
+      </if>
+      <if test="lowestPrice != null" >
+        lowest_price,
+      </if>
+      <if test="hightPrice != null" >
+        hight_price,
+      </if>
+      <if test="lowestWeight != null" >
+        lowest_weight,
+      </if>
+      <if test="hightWeight != null" >
+        hight_weight,
+      </if>
+      <if test="nature != null" >
+        nature,
+      </if>
+      <if test="interest != null" >
+        interest,
+      </if>
+      <if test="shape != null" >
+        shape,
+      </if>
+      <if test="hairLength != null" >
+        hair_length,
+      </if>
+      <if test="history != null" >
+        history,
+      </if>
+      <if test="formCharacter != null" >
+        form_character,
+      </if>
+      <if test="standard != null" >
+        standard,
+      </if>
+      <if test="lifeHabit != null" >
+        life_habit,
+      </if>
+      <if test="characterTraits != null" >
+        character_traits,
+      </if>
+      <if test="diet != null" >
+        diet,
+      </if>
+      <if test="tips != null" >
+        tips,
+      </if>
+      <if test="domesticateMethod != null" >
+        domesticate_method,
+      </if>
+      <if test="disease != null" >
+        disease,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="petsPhotos != null" >
+        pets_photos,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="udateAdmin != null" >
+        udate_admin,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="petsInfoId != null" >
+        #{petsInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="petsNameCn != null" >
+        #{petsNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="petsNameEn != null" >
+        #{petsNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthPlace != null" >
+        #{birthPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="lowestPrice != null" >
+        #{lowestPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="hightPrice != null" >
+        #{hightPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="lowestWeight != null" >
+        #{lowestWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="hightWeight != null" >
+        #{hightWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="nature != null" >
+        #{nature,jdbcType=VARCHAR},
+      </if>
+      <if test="interest != null" >
+        #{interest,jdbcType=VARCHAR},
+      </if>
+      <if test="shape != null" >
+        #{shape,jdbcType=VARCHAR},
+      </if>
+      <if test="hairLength != null" >
+        #{hairLength,jdbcType=VARCHAR},
+      </if>
+      <if test="history != null" >
+        #{history,jdbcType=VARCHAR},
+      </if>
+      <if test="formCharacter != null" >
+        #{formCharacter,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null" >
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="lifeHabit != null" >
+        #{lifeHabit,jdbcType=VARCHAR},
+      </if>
+      <if test="characterTraits != null" >
+        #{characterTraits,jdbcType=VARCHAR},
+      </if>
+      <if test="diet != null" >
+        #{diet,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null" >
+        #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="domesticateMethod != null" >
+        #{domesticateMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="disease != null" >
+        #{disease,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="petsPhotos != null" >
+        #{petsPhotos,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="udateAdmin != null" >
+        #{udateAdmin,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.longshu.petsfairy.entity.PetsInfoExample" resultType="java.lang.Integer" >
+    select count(*) from pets_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pets_info
+    <set >
+      <if test="record.petsInfoId != null" >
+        pets_info_id = #{record.petsInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.petsNameCn != null" >
+        pets_name_cn = #{record.petsNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.petsNameEn != null" >
+        pets_name_en = #{record.petsNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null" >
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthPlace != null" >
+        birth_place = #{record.birthPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lowestPrice != null" >
+        lowest_price = #{record.lowestPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hightPrice != null" >
+        hight_price = #{record.hightPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lowestWeight != null" >
+        lowest_weight = #{record.lowestWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.hightWeight != null" >
+        hight_weight = #{record.hightWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.nature != null" >
+        nature = #{record.nature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interest != null" >
+        interest = #{record.interest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shape != null" >
+        shape = #{record.shape,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hairLength != null" >
+        hair_length = #{record.hairLength,jdbcType=VARCHAR},
+      </if>
+      <if test="record.history != null" >
+        history = #{record.history,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formCharacter != null" >
+        form_character = #{record.formCharacter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standard != null" >
+        standard = #{record.standard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lifeHabit != null" >
+        life_habit = #{record.lifeHabit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.characterTraits != null" >
+        character_traits = #{record.characterTraits,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diet != null" >
+        diet = #{record.diet,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tips != null" >
+        tips = #{record.tips,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domesticateMethod != null" >
+        domesticate_method = #{record.domesticateMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disease != null" >
+        disease = #{record.disease,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.petsPhotos != null" >
+        pets_photos = #{record.petsPhotos,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryId != null" >
+        category_id = #{record.categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.udateAdmin != null" >
+        udate_admin = #{record.udateAdmin,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pets_info
+    set pets_info_id = #{record.petsInfoId,jdbcType=VARCHAR},
+      pets_name_cn = #{record.petsNameCn,jdbcType=VARCHAR},
+      pets_name_en = #{record.petsNameEn,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      birth_place = #{record.birthPlace,jdbcType=VARCHAR},
+      lowest_price = #{record.lowestPrice,jdbcType=DECIMAL},
+      hight_price = #{record.hightPrice,jdbcType=DECIMAL},
+      lowest_weight = #{record.lowestWeight,jdbcType=DOUBLE},
+      hight_weight = #{record.hightWeight,jdbcType=DOUBLE},
+      nature = #{record.nature,jdbcType=VARCHAR},
+      interest = #{record.interest,jdbcType=VARCHAR},
+      shape = #{record.shape,jdbcType=VARCHAR},
+      hair_length = #{record.hairLength,jdbcType=VARCHAR},
+      history = #{record.history,jdbcType=VARCHAR},
+      form_character = #{record.formCharacter,jdbcType=VARCHAR},
+      standard = #{record.standard,jdbcType=VARCHAR},
+      life_habit = #{record.lifeHabit,jdbcType=VARCHAR},
+      character_traits = #{record.characterTraits,jdbcType=VARCHAR},
+      diet = #{record.diet,jdbcType=VARCHAR},
+      tips = #{record.tips,jdbcType=VARCHAR},
+      domesticate_method = #{record.domesticateMethod,jdbcType=VARCHAR},
+      disease = #{record.disease,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      pets_photos = #{record.petsPhotos,jdbcType=VARCHAR},
+      category_id = #{record.categoryId,jdbcType=VARCHAR},
+      udate_admin = #{record.udateAdmin,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.longshu.petsfairy.entity.PetsInfo" >
+    update pets_info
+    <set >
+      <if test="petsNameCn != null" >
+        pets_name_cn = #{petsNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="petsNameEn != null" >
+        pets_name_en = #{petsNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthPlace != null" >
+        birth_place = #{birthPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="lowestPrice != null" >
+        lowest_price = #{lowestPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="hightPrice != null" >
+        hight_price = #{hightPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="lowestWeight != null" >
+        lowest_weight = #{lowestWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="hightWeight != null" >
+        hight_weight = #{hightWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="nature != null" >
+        nature = #{nature,jdbcType=VARCHAR},
+      </if>
+      <if test="interest != null" >
+        interest = #{interest,jdbcType=VARCHAR},
+      </if>
+      <if test="shape != null" >
+        shape = #{shape,jdbcType=VARCHAR},
+      </if>
+      <if test="hairLength != null" >
+        hair_length = #{hairLength,jdbcType=VARCHAR},
+      </if>
+      <if test="history != null" >
+        history = #{history,jdbcType=VARCHAR},
+      </if>
+      <if test="formCharacter != null" >
+        form_character = #{formCharacter,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null" >
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="lifeHabit != null" >
+        life_habit = #{lifeHabit,jdbcType=VARCHAR},
+      </if>
+      <if test="characterTraits != null" >
+        character_traits = #{characterTraits,jdbcType=VARCHAR},
+      </if>
+      <if test="diet != null" >
+        diet = #{diet,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null" >
+        tips = #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="domesticateMethod != null" >
+        domesticate_method = #{domesticateMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="disease != null" >
+        disease = #{disease,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="petsPhotos != null" >
+        pets_photos = #{petsPhotos,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="udateAdmin != null" >
+        udate_admin = #{udateAdmin,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pets_info_id = #{petsInfoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.longshu.petsfairy.entity.PetsInfo" >
+    update pets_info
+    set pets_name_cn = #{petsNameCn,jdbcType=VARCHAR},
+      pets_name_en = #{petsNameEn,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      birth_place = #{birthPlace,jdbcType=VARCHAR},
+      lowest_price = #{lowestPrice,jdbcType=DECIMAL},
+      hight_price = #{hightPrice,jdbcType=DECIMAL},
+      lowest_weight = #{lowestWeight,jdbcType=DOUBLE},
+      hight_weight = #{hightWeight,jdbcType=DOUBLE},
+      nature = #{nature,jdbcType=VARCHAR},
+      interest = #{interest,jdbcType=VARCHAR},
+      shape = #{shape,jdbcType=VARCHAR},
+      hair_length = #{hairLength,jdbcType=VARCHAR},
+      history = #{history,jdbcType=VARCHAR},
+      form_character = #{formCharacter,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      life_habit = #{lifeHabit,jdbcType=VARCHAR},
+      character_traits = #{characterTraits,jdbcType=VARCHAR},
+      diet = #{diet,jdbcType=VARCHAR},
+      tips = #{tips,jdbcType=VARCHAR},
+      domesticate_method = #{domesticateMethod,jdbcType=VARCHAR},
+      disease = #{disease,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      pets_photos = #{petsPhotos,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=VARCHAR},
+      udate_admin = #{udateAdmin,jdbcType=VARCHAR}
+    where pets_info_id = #{petsInfoId,jdbcType=VARCHAR}
+  </update>
+</mapper>

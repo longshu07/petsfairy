@@ -21,8 +21,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
-
 
 /**
  * 图片处理工具类：<br>
